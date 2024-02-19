@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginScreenView: View {
+    @State var showSheet = false
+    
     var body: some View {
         VStack(spacing:30){
             
@@ -25,7 +27,7 @@ struct LoginScreenView: View {
             
                 
             Button{
-                
+                showSheet = true
             } label: {
                 Text("Login")
                     .frame(maxWidth: .maximum(100, 340), maxHeight: .maximum(10, 50))
@@ -38,10 +40,14 @@ struct LoginScreenView: View {
                             .stroke(Color.mint, lineWidth: 2)
                     )
             }
+            .sheet(isPresented: $showSheet){
+                SignInView(isRegistered: true)
+            }
+            
             HStack{
                 Text("No Account?")
                 Button{
-                    
+                    showSheet = true
                 } label: {
                     Text("Register")
                         .underline()
@@ -49,6 +55,9 @@ struct LoginScreenView: View {
                         .bold()
                 }
             }.padding(.trailing, 160)
+                .sheet(isPresented: $showSheet){
+                    SignInView(isRegistered: false)
+                }
             
             
             Spacer()
