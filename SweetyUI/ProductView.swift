@@ -48,6 +48,7 @@ struct ProductView: View {
                             //.position(x:185, y:180)
                             .padding()
                             .foregroundColor(.gray)
+                            .padding(.horizontal, 20)
                             
                         
                     Spacer()
