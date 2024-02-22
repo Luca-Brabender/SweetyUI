@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
+    let searchViewModel = SearchViewModel()
     let products = ["Donuts", "Cupcake", "Cheesecake", "Brownies"]
     @State private var searchText = ""
     
@@ -15,12 +16,12 @@ struct SearchView: View {
         VStack{
             NavigationStack{
                 List {
-                    ForEach(products, id:\.self) { product in
+                    ForEach(searchViewModel.fetchProducts()) { product in
                         NavigationLink{
-                            ProductView(name: product, productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.")
+                            ProductView(name: product.productName, productText: product.productDescription)
                                 
                         } label: {
-                            ProductButtonView(productName: product, price: 0)
+                            ProductButtonView(productName: product.productName, price: product.productPrice)
                         }
                         
                     }

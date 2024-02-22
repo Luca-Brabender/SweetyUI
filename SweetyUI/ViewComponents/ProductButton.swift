@@ -9,15 +9,16 @@ import SwiftUI
 
 struct ProductButtonView: View{
     var productName: String
-    var price: Int
+    var price: Double
     
     var body: some View {
         Button(action: {}){
             VStack{
                 HStack{
+                    let priceText = String(format: "%.2f", price)
                     Text(productName)
                     Spacer()
-                    Text("\(price) $ per piece")
+                    Text("\(priceText) $ per piece")
                 }
             }
         }.font(.headline)
@@ -33,6 +34,6 @@ struct ProductButtonView: View{
 
 struct ProductButton_Previews: PreviewProvider {
     static var previews: some View {
-        ProductButtonView(productName: "Donut", price: 1)
+        ProductButtonView(productName: "Donut", price: 1.50)
     }
 }
