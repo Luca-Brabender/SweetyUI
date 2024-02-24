@@ -15,17 +15,18 @@ struct SearchView: View {
     var body: some View {
         VStack{
             NavigationStack{
-                List {
-                    ForEach(searchViewModel.fetchProducts()) { product in
-                        NavigationLink{
-                            ProductView(name: product.productName, productText: product.productDescription)
-                                
-                        } label: {
-                            ProductButtonView(productName: product.productName, price: product.productPrice)
+                ScrollView {
+                    LazyVStack{
+                        ForEach(searchViewModel.fetchProducts()) { product in
+                            NavigationLink{
+                                ProductView(name: product.productName,     productText: product.productDescription,
+                                            image: product.productPicture)
+                            } label: {
+                                ImageButton(image: product.productPicture, name: product.productName, price: product.productPrice)
+                                    
+                            }
                         }
-                        
                     }
-                    
                 }
                 .navigationTitle("Sweets")
             }.accentColor(.mint)

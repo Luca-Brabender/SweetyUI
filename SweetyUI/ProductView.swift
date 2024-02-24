@@ -11,12 +11,13 @@ struct ProductView: View {
     @State private var orderNumber = 0
     var name: String
     var productText: String;
+    var image: String
     
     var body: some View {
         ZStack{
             VStack{
                 
-                Image("donuts")
+                Image(image)
                     .resizable()
                     .frame(width: 400.0, height: 400.0)
                     .ignoresSafeArea()
@@ -97,6 +98,6 @@ struct ProductView: View {
 
 struct ProductView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductView(name: "Donut", productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.")
+        ProductView(name: "Donut", productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.", image: "donuts")
     }
 }
