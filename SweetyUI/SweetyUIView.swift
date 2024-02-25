@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SweetyUIView: View {
+    @EnvironmentObject var authSettings: AuthSettings
+    
     var body: some View {
         TabView(){
             Text("Log in To view your shopping basket.")
