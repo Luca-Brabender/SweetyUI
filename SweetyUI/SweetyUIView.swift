@@ -12,10 +12,9 @@ struct SweetyUIView: View {
     
     var body: some View {
         TabView(){
-            Text("Log in To view your shopping basket.")
-                .badge(2)
+            ShoppingCartView()
                 .tabItem{
-                    Label("Basket",
+                    Label("Cart",
                         systemImage: "cart")
                 }
             SearchView()
