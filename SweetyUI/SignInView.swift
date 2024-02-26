@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SignInView: View {
+    @EnvironmentObject var authSettings: AuthSettings
+    
     @State var username = ""
     @State var password = ""
     @State var email = ""
@@ -165,6 +167,6 @@ struct SignInView: View {
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView()
+        SignInView().environmentObject(AuthSettings(user: nil, authenticated: false))
     }
 }

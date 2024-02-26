@@ -23,15 +23,18 @@ struct SweetyUIView: View {
                     Label("Sweets", systemImage: "bag.circle.fill")
                 }
             LoginScreenView()
+                .environmentObject(authSettings)
                 .tabItem{
                     Label("Profile", systemImage: "person")
                 }
+                
+               
         }.accentColor(.mint)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        SweetyUIView()
+        SweetyUIView().environmentObject(AuthSettings(user: nil, authenticated: false))
     }
 }

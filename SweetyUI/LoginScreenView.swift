@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginScreenView: View {
+    @EnvironmentObject var authSettings: AuthSettings
     @State var showSheet = false
     
     var body: some View {
@@ -57,7 +58,7 @@ struct LoginScreenView: View {
             }.padding(.trailing, 160)
                 .sheet(isPresented: $showSheet){
                     SignInView(isRegistered: false)
-                }
+                }.environmentObject(authSettings)
             
             
             Spacer()
@@ -68,6 +69,7 @@ struct LoginScreenView: View {
 
 struct LoginScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginScreenView()
+        LoginScreenView().environmentObject(AuthSettings(user: nil, authenticated: false))
+            
     }
 }
