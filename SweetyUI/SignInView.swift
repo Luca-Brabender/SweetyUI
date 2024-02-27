@@ -98,7 +98,7 @@ struct SignInView: View {
                             .cornerRadius(20.0)
                         
                         
-                        TextField("E-mail", text: $username)
+                        TextField("E-mail", text: $email)
                             .padding()
                             .background(Color.white)
                             .cornerRadius(20.0)

@@ -19,8 +19,11 @@ struct ShoppingCartView: View {
             Text("No items")
                 .font(.headline)
             Text("Login to view your shopping cart")
-                .padding(.bottom, 450)
+                .padding(.bottom, 20)
                 .foregroundColor(.gray)
+            
+            SimpleLoginButtonView()
+                .padding(.bottom, 450)
             
         }
         .padding(.trailing, 85)
