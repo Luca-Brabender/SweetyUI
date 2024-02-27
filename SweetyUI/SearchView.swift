@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
+    
     let searchViewModel = SearchViewModel()
     let products = ["Donuts", "Cupcake", "Cheesecake", "Brownies"]
     @State private var searchText = ""

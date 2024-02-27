@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct SignInView: View {
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var authSettings: AuthSettings
     
     @State var username = ""
     @State var password = ""
     @State var email = ""
-    @State var isRegistered = true
+    @State var isRegistered: Bool;
     
     var body: some View {
         ZStack{
@@ -36,7 +37,7 @@ struct SignInView: View {
                     VStack(alignment: .leading, spacing: 15){
                         
                         
-                        TextField("E-mail", text: $username)
+                        TextField("Username", text: $username)
                             .padding()
                             .background(Color.white)
                             .cornerRadius(20.0)
@@ -55,7 +56,13 @@ struct SignInView: View {
                     
                     
                     VStack{
-                        Button(action: {}){
+                        Button(action: {
+                            authSettings.authenticate(
+                                User(userName: username, email: email),
+                                true
+                            )
+                            dismiss()
+                        }){
                             Text("Login")
                                 .font(.headline)
                                 .foregroundColor(.white)
@@ -118,7 +125,11 @@ struct SignInView: View {
                     
                     Button(action: {
                         Task{
-                            //await registerViewModel.registerUser(email, passwordd)
+                            authSettings.authenticate(
+                                User(userName: username, email: email),
+                                true
+                            )
+                           dismiss()
                         }
                     }){
                         Text("Register")
@@ -167,6 +178,6 @@ struct SignInView: View {
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView().environmentObject(AuthSettings(user: nil, authenticated: false))
+        SignInView(isRegistered: false).environmentObject(AuthSettings(user: nil, authenticated: false))
     }
 }

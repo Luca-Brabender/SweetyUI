@@ -8,11 +8,18 @@
 import Foundation
 
 class AuthSettings: ObservableObject{
-    var user: User?
-    var isAuthenticated: Bool
+    @Published var user: User?
+    @Published var isAuthenticated: Bool
     
     init(user: User?, authenticated:Bool) {
         self.user = user
         self.isAuthenticated = authenticated
+    }
+}
+
+extension AuthSettings{
+    public func authenticate(_ user: User, _ isAuthenticated: Bool){
+        self.user = user
+        self.isAuthenticated = isAuthenticated
     }
 }
