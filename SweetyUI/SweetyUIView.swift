@@ -35,5 +35,7 @@ struct SweetyUIView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         SweetyUIView().environmentObject(AuthSettings(user: nil, authenticated: false))
+        SweetyUIView().environmentObject(AuthSettings(user: nil, authenticated: false))
+            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
     }
 }

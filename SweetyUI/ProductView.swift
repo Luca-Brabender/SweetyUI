@@ -14,83 +14,82 @@ struct ProductView: View {
     var image: String
     
     var body: some View {
-        ZStack{
-            VStack{
-                
-                Image(image)
-                    .resizable()
-                    .frame(width: 400.0, height: 400.0)
-                    .ignoresSafeArea()
-                Spacer()
-            }
-            
+        GeometryReader{ geometry in
             ZStack{
-                
                 VStack{
                     
-                    Spacer()
-                    RoundedRectangle(cornerRadius: 40)
-                        .fill(.white)
-                        .frame(width: 400, height: 450)
+                    Image(image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(
+                            width: geometry.size.width * 1,
+                            height: geometry.size.height * 0.7
+                        )
                         .ignoresSafeArea()
-                    
-                    
+                        
+                    Spacer()
                 }
-                VStack(){
-                    Spacer()
-                    Text(name)
-                        .font(.system(size: 36, weight: .bold, design: .default))
-                        //.padding()
-                    
-                    
-                        
-                        Text(productText)
-                        .frame(maxHeight: 110, alignment: .center)
-                            //.position(x:185, y:180)
-                            .padding()
-                            .foregroundColor(.gray)
-                            .padding(.horizontal, 20)
-                            
-                        
-                    Spacer()
-                        .frame(height: 50)
+                
+                ZStack{
                     
                     VStack{
-                        Text("How many do you want to order?")
-                            .foregroundColor(.black)
+                        
+                        Spacer()
+                        RoundedRectangle(cornerRadius: 40)
+                            .fill(.white)
+                            .frame(width: geometry.size.width * 1.1, height: geometry.size.height * 0.5)
+                            .position(x: geometry.size.width * 0.5,y: geometry.size.height * 0.6)
+                            //.ignoresSafeArea()
+                        
+                        
+                    }
+                    VStack(){
+                        //Spacer()
+                        Text(name)
+                            .font(.system(size: 36, weight: .bold, design: .default))
+                        //.padding()
+                        
+                        
+                        
+                        Text(productText)
+                            .frame(maxHeight: geometry.size.height*0.14, alignment: .center)
                             //.padding()
-                        HStack{
-                            Spacer()
-                            TextField("How many do you want?", value: $orderNumber, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .padding(20)
-                                //.position(x: 0)
-                            //.background(.mint)
-                                .foregroundColor(.mint)
-                            
-                            
-                            
-                            Button{
+                            .foregroundColor(.gray)
+            
+                        
+                        VStack{
+                            Text("How many do you want to order?")
+                                .foregroundColor(.black)
+                            //.padding()
+                            VStack{
+                                Picker("Number of \(name)", selection: $orderNumber) {
+                                        ForEach(2..<51) {
+                                            Text("\($0) \(name)s")
+                                        }
+                                    }
                                 
-                            } label: {
-                                Image(systemName: "cart.badge.plus")
-                                    .foregroundColor(.white)
-                                    .frame(width: 100, height: 50)
-                                    .background(Color.mint)
-                                    .cornerRadius(15)
-                                    .padding(.horizontal)
-                                    //.fixedSize()
-
+                                Button{
+                                    
+                                } label: {
+                                    
+                                    
+                                    Image(systemName: "cart.badge.plus")
+                                        .foregroundColor(.white)
+                                        .frame(width: geometry.size.width*0.9, height: geometry.size.height*0.06)
+                                        .background(Color.mint)
+                                        .cornerRadius(15)
+                                        .padding(.horizontal)
+                                }
+                                .position(x: geometry.size.width*0.5, y: geometry.size.height*0.15)
+                                
                             }
                             
-                        }
-                        
-                    }.frame(maxHeight: 150, alignment: .top)
-                    
-                    
+                        }.frame(maxHeight: geometry.size.height*(0.2))
+                    }
+                    .position(x: geometry.size.width * 0.5, y: geometry.size.height*0.60)
                 }
+                
             }
-            
         }
     }
     
