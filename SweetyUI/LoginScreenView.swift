@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginScreenView: View {
     @EnvironmentObject var authSettings: AuthSettings
     @State var showSheet = false
+    @State var isDarkMode = false
     
     var body: some View {
         
@@ -29,7 +30,6 @@ struct LoginScreenView: View {
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
                 .padding(.bottom)
-                
                 
                 Button{
                     showSheet = true
@@ -63,20 +63,35 @@ struct LoginScreenView: View {
                     .sheet(isPresented: $showSheet){
                         SignInView(isRegistered: true)
                     }.environmentObject(authSettings)
-                
-                
                 Spacer()
             }
             .navigationTitle("Profile")
         } else {
-            Text("Hello \(authSettings.user!.userName)")
+            VStack{
+                NavigationStack{
+                    Form {
+                        Toggle("Dark Mode", isOn: $isDarkMode)
+                        Section{
+                            Button("Sign off"){
+                                authSettings.delete()
+                            }
+                        }
+                    }
+                    .navigationTitle("Hello, \(authSettings.user!.userName)")
+                }
+                
+            }
         }
     }
 }
 
 struct LoginScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginScreenView().environmentObject(AuthSettings(user: nil, authenticated: false))
-            
+        LoginScreenView().environmentObject(AuthSettings(user: User(userName: "User678", email: "user678@email.com"), authenticated: true))
+        
+        LoginScreenView().environmentObject(AuthSettings(user: User(userName: "User678", email: "user678@email.com"), authenticated: true))
+            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        
+        
     }
 }

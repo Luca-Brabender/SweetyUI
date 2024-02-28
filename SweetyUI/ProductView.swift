@@ -99,5 +99,8 @@ struct ProductView: View {
 struct ProductView_Previews: PreviewProvider {
     static var previews: some View {
         ProductView(name: "Donut", productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.", image: "donuts")
+        
+        ProductView(name: "Donut", productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.", image: "donuts")
+            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
     }
 }

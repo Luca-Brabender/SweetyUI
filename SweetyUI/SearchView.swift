@@ -50,5 +50,8 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
+        
+        SearchView()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
     }
 }

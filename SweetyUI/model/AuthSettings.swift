@@ -22,4 +22,8 @@ extension AuthSettings{
         self.user = user
         self.isAuthenticated = isAuthenticated
     }
+    public func delete(){
+        self.user = nil
+        self.isAuthenticated = false
+    }
 }
