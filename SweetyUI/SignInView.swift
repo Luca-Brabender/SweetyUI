@@ -17,161 +17,163 @@ struct SignInView: View {
     @State var isRegistered: Bool;
     
     var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: 20)
-                .fill(.thickMaterial)
-                .frame(width: 360, height: 400, alignment: .topTrailing)
-                .padding(.bottom, 220)
-            
-            
-            
-            VStack{
-                if(!isRegistered){
-                    Text("Sign In")
-                        .font(.system(size: 30, weight: .heavy, design: .default))
-                        .foregroundColor(Color.mint)
-                        .padding([.top, .bottom], 40)
-                        .padding(.top,30)
-                    
-                    
-                    VStack(alignment: .leading, spacing: 15){
+        GeometryReader{ geometry in
+            ZStack{
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.thickMaterial)
+                    .frame(
+                        width: geometry.size.width*0.9,
+                        height: geometry.size.height*0.5,
+                        alignment: .top
+                    )
+                    .padding(.bottom, geometry.size.height*0.2)
+                
+                
+                
+                VStack{
+                    if(!isRegistered){
+                        
+                        VStack(alignment: .leading, spacing: 10){
+                            
+                            Text("Sign In")
+                                .font(.system(size: 30, weight: .heavy, design: .default))
+                                .foregroundColor(Color.mint)
+                                .position(x:geometry.size.width*0.4, y:geometry.size.height*0.25)
+                            
+                            TextField("Username", text: $username)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(20.0)
+                            
+                            
+                            SecureField("Password", text: $password)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(20.0)
+                            
+                            
+                            
+                        }.padding([.leading, .trailing], geometry.size.width*0.1)
                         
                         
-                        TextField("Username", text: $username)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(20.0)
+                        VStack{
+                            Button(action: {
+                                authSettings.authenticate(
+                                    User(userName: username, email: email),
+                                    true
+                                )
+                                dismiss()
+                            }){
+                                Text("Login")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .frame(width: 300, height: 50)
+                                    .background(Color.mint)
+                                    .cornerRadius(15.0)
+                            }.padding(.top, 40)
+                            
+                            
+                            HStack{
+                                Text("No Account?")
+                                    .foregroundColor(.mint)
+                                Button{
+                                    withAnimation(.default){
+                                        isRegistered.toggle()
+                                    }
+                                } label: {
+                                    Text("Register")
+                                        .underline()
+                                        .tint(.primary)
+                                        .bold()
+                                        .foregroundColor(.mint)
+                                }
+                            }
+                        }.padding(.bottom, geometry.size.height*0.4)
+                        
+                    } else {
+                        
+                        VStack(alignment: .leading, spacing: 10){
+                            Text("Register")
+                                .font(.system(size: 30, weight: .heavy, design: .default))
+                                .foregroundColor(Color.mint)
+                                .position(x: geometry.size.width * 0.4,y: geometry.size.height * 0.22)
+                            
+                            
+                            TextField("Username", text: $username)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(20.0)
+                            
+                            
+                            TextField("E-mail", text: $email)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(20.0)
+                            
+                            
+                            SecureField("Password", text: $password)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(20.0)
+                            
+                            
+                            
+                        }.padding([.leading, .trailing], geometry.size.height*0.05)
                         
                         
-                        SecureField("Password", text: $password)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(20.0)
                         
                         
-                        
-                    }.padding([.leading, .trailing], 27.5)
-                    
-                    
-                    
-                    
-                    VStack{
                         Button(action: {
-                            authSettings.authenticate(
-                                User(userName: username, email: email),
-                                true
-                            )
-                            dismiss()
+                            Task{
+                                authSettings.authenticate(
+                                    User(userName: username, email: email),
+                                    true
+                                )
+                                dismiss()
+                            }
                         }){
-                            Text("Login")
+                            Text("Register")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding()
                                 .frame(width: 300, height: 50)
                                 .background(Color.mint)
                                 .cornerRadius(15.0)
-                        }.padding(.top, 50)
-                        
+                        }.padding(.top, 20)
                         
                         
                         HStack{
-                            Text("No Account?")
+                            Text("Already having an Account? ")
                                 .foregroundColor(.mint)
                             Button{
                                 withAnimation(.default){
                                     isRegistered.toggle()
                                 }
                             } label: {
-                                Text("Register")
+                                Text("Sign In")
                                     .underline()
                                     .tint(.primary)
                                     .bold()
                                     .foregroundColor(.mint)
                             }
-                        }
-                    }.padding(.bottom, 300)
-                    
-                } else {
-                    Text("Register")
-                        .font(.system(size: 30, weight: .heavy, design: .default))
-                        .foregroundColor(Color.mint)
-                        .padding(.top, 80)
-                    
-                    
-                    VStack(alignment: .leading, spacing: 15){
-                        TextField("Username", text: $username)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(20.0)
-                        
-                        
-                        TextField("E-mail", text: $email)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(20.0)
-                        
-                        
-                        SecureField("Password", text: $password)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(20.0)
-                        
-                        
-                        
-                    }.padding([.leading, .trailing], 27.5)
-                    
-                    
-                    
-                    
-                    Button(action: {
-                        Task{
-                            authSettings.authenticate(
-                                User(userName: username, email: email),
-                                true
-                            )
-                           dismiss()
-                        }
-                    }){
-                        Text("Register")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(width: 300, height: 50)
-                            .background(Color.mint)
-                            .cornerRadius(15.0)
-                    }.padding(.top, 20)
-                    
-                    
-                    HStack{
-                        Text("Already having an Account? ")
-                            .foregroundColor(.mint)
-                        Button{
-                            withAnimation(.default){
-                                isRegistered.toggle()
-                            }
-                        } label: {
-                            Text("Sign In")
-                                .underline()
-                                .tint(.primary)
-                                .bold()
-                                .foregroundColor(.mint)
-                        }
-                    }.padding(.bottom, 300)
+                        }.padding(.bottom, geometry.size.height*0.4)
+                    }
                 }
+                
             }
-            
+            .background(
+                Image("icecream")
+                    .resizable()
+                    .colorMultiply(.gray)
+                    .frame(
+                        width: geometry.size.width*1,
+                        height: geometry.size.height*1.2
+                    )
+                    
+            )
+            .ignoresSafeArea()
         }
-        .background(
-            Image("icecream")
-                .resizable()
-                .colorMultiply(.gray)
-                .frame(width: 800.0, height: 900.0)
-                .ignoresSafeArea()
-            
-            //.saturation(0.8)
-            //.contrast(0.1)
-        )
-        .ignoresSafeArea()
     }
 }
 
