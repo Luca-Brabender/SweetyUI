@@ -44,23 +44,23 @@ struct ProductView: View {
                         
                     }
                     VStack(){
-                        //Spacer()
+                        
                         Text(name)
                             .font(.system(size: 36, weight: .bold, design: .default))
-                        //.padding()
+                        
                         
                         
                         
                         Text(productText)
                             .frame(maxHeight: geometry.size.height*0.14, alignment: .center)
-                            //.padding()
+                            
                             .foregroundColor(.gray)
             
                         
                         VStack{
                             Text("How many do you want to order?")
                                 .foregroundColor(.black)
-                            //.padding()
+                            
                             VStack{
                                 Picker("Number of \(name)", selection: $orderNumber) {
                                         ForEach(2..<51) {
@@ -72,13 +72,19 @@ struct ProductView: View {
                                     
                                 } label: {
                                     
-                                    
-                                    Image(systemName: "cart.badge.plus")
-                                        .foregroundColor(.white)
-                                        .frame(width: geometry.size.width*0.9, height: geometry.size.height*0.06)
-                                        .background(Color.mint)
-                                        .cornerRadius(15)
-                                        .padding(.horizontal)
+                                    HStack{
+                                        Text("Add To Cart")
+                                            .padding(.leading)
+                                        Image(systemName: "cart.badge.plus")
+                                        
+                                    }
+                                    .foregroundColor(.white)
+                                    .frame(
+                                        width: geometry.size.width*0.9,
+                                        height: geometry.size.height*0.06)
+                                    .background(Color.mint)
+                                    .cornerRadius(15)
+                                    .padding(.horizontal)
                                 }
                                 .position(x: geometry.size.width*0.5, y: geometry.size.height*0.15)
                                 
