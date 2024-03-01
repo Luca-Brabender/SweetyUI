@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SweetyUIApp: App {
-    @StateObject var authSettings = AuthSettings(user: nil, authenticated: false)
+    @StateObject var authSettings = AuthSettings(user: nil, shoppingCart: nil)
     
     var body: some Scene {
         WindowGroup {

@@ -8,38 +8,98 @@
 import SwiftUI
 
 struct ShoppingCartView: View {
+    @EnvironmentObject var authSettings: AuthSettings
+    @State var list: [ProductItem]?
     @State var isLoggedIn: Bool = false
+    @State var showSheet: Bool = false
+    @State var resultPrice: Double = 0
+    @State var index = 0
     
     var body: some View {
-        
         GeometryReader{ geometry in
-            VStack(alignment: .leading){
-                Text("Shopping Cart")
-                    .font(.system(size: 30))
-                    
-                
-                Text("No items")
-                    .font(.headline)
-                    .position(x: geometry.size.width*0.17, y:geometry.size.height*0.2)
-                Text("Login to view your shopping cart")
-                    .foregroundColor(.gray)
-                    .position(x:geometry.size.width*0.4, y:geometry.size.height*0.0)
-                
-                SimpleLoginButtonView()
-                    .position(
-                        x: geometry.size.width*0.2,
-                        y:geometry.size.height*(-0.23)
-                    )
-                    
-                
-            }.padding(23)
+            NavigationStack{
+                VStack{
+                    if(authSettings.user == nil)
+                    {
+                        ShoppingCartLogin
+                    } else{
+                        List{
+                            ForEach(authSettings.shoppingCart!.itemList) { productItem in
+                                VStack{
+                                    ShoppingCartButton(productItem: productItem)
+                                }
+                            }
+                            .onDelete(perform:delete)
+                            
+                        }
+                        Text("There are \(authSettings.shoppingCart!.getSize()) item in your list")
+                    }
+                }
+                    .navigationTitle("Shopping Cart")
+                    .onAppear()
+            }
         }
         
     }
+    
+    var ShoppingCartLogin: some View{
+        GeometryReader{ geometry in
+            
+            Text("No items")
+                .font(.headline)
+                .position(x: geometry.size.width*0.165, y:geometry.size.height*0.2)
+            Text("Login to view your shopping cart")
+                .foregroundColor(.gray)
+                .position(x:geometry.size.width*0.39, y:geometry.size.height*0.23)
+            
+            LoginButton
+        }
+    }
+    
+
+    
+    var LoginButton: some View {
+        GeometryReader{ geometry in
+            Button(action: {
+                showSheet.toggle()
+            }){
+                VStack{
+                    HStack{
+                        Text("Log-in")
+                    }
+                }
+            }.font(.headline)
+                .foregroundColor(.white)
+                .padding()
+                .frame(width: 100, height: 50)
+                .background(Color.mint)
+                .cornerRadius(10.0)
+                .position(
+                    x: geometry.size.width*0.2,
+                    y:geometry.size.height*(0.3)
+                )
+                .sheet(isPresented: $showSheet){
+                    SignInView(isRegistered: false)
+                }.environmentObject(authSettings)
+        }
+    }
+    
+    func delete(at position: IndexSet) {
+        authSettings.shoppingCart!.removeFromCart(index: position)
+        authSettings.objectWillChange.send()
+        
+    }
+    
 }
 
 struct ShoppingCartView_Previews: PreviewProvider {
     static var previews: some View {
-        ShoppingCartView()
+        ShoppingCartView().environmentObject(AuthSettings(
+            user: User(
+                userName: "Angela",
+                email: "angela@mail.com"
+            ), shoppingCart: ShoppingCart(itemList: [ProductItem(itemName: "Donuts", itemPieces: 20, itemPrice: 20.30), ProductItem(itemName: "Brownies", itemPieces: 20, itemPrice: 20.30)]
+                                        )))
+        ShoppingCartView().environmentObject(AuthSettings(user: nil, shoppingCart: nil))
     }
 }

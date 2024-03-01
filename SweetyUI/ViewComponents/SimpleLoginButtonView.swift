@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct SimpleLoginButtonView: View {
-    
+    @State var showSheet: Bool
     var body: some View {
-        Button(action: {}){
+        Button(action: {
+            showSheet.toggle()
+        }){
             VStack{
                 HStack{
                     
@@ -29,6 +31,6 @@ struct SimpleLoginButtonView: View {
 
 struct SimpleLoginButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        SimpleLoginButtonView()
+        SimpleLoginButtonView(showSheet: false)
     }
 }

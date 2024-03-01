@@ -87,9 +87,9 @@ struct LoginScreenView: View {
 
 struct LoginScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginScreenView().environmentObject(AuthSettings(user: User(userName: "User678", email: "user678@email.com"), authenticated: true))
+        LoginScreenView().environmentObject(AuthSettings(user: User(userName: "User678", email: "user678@email.com"), shoppingCart: nil))
         
-        LoginScreenView().environmentObject(AuthSettings(user: User(userName: "User678", email: "user678@email.com"), authenticated: true))
+        LoginScreenView().environmentObject(AuthSettings(user: User(userName: "User678", email: "user678@email.com"), shoppingCart: nil))
             .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
         
         

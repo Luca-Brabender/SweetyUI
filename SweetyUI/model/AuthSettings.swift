@@ -9,21 +9,31 @@ import Foundation
 
 class AuthSettings: ObservableObject{
     @Published var user: User?
-    @Published var isAuthenticated: Bool
+    @Published var shoppingCart: ShoppingCart?
     
-    init(user: User?, authenticated:Bool) {
+    init(user: User?, shoppingCart: ShoppingCart?) {
         self.user = user
-        self.isAuthenticated = authenticated
+        self.shoppingCart = shoppingCart
     }
 }
 
 extension AuthSettings{
-    public func authenticate(_ user: User, _ isAuthenticated: Bool){
+    public func authenticate(_ user: User, _ shoppingCart: ShoppingCart){
         self.user = user
-        self.isAuthenticated = isAuthenticated
+        self.shoppingCart = shoppingCart
     }
     public func delete(){
         self.user = nil
-        self.isAuthenticated = false
+        self.shoppingCart = nil
     }
+    
+    public func addToCart(item: ProductItem){
+        self.shoppingCart!.addToCart(item: item)
+        self.objectWillChange.send()
+    }
+    
+    public func removeFromCart(index: IndexSet){
+        shoppingCart?.removeFromCart(index: index)
+    }
+    
 }

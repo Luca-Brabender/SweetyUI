@@ -8,7 +8,7 @@
 import Foundation
 
 
-class User: Hashable, Identifiable{
+class User: Hashable, Identifiable, ObservableObject{
     let userId: UUID = UUID()
     var userName: String
     var email: String

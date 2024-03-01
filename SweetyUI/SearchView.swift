@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    
+    @EnvironmentObject var authSettings:AuthSettings
     let searchViewModel = SearchViewModel()
     let products = ["Donuts", "Cupcake", "Cheesecake", "Brownies"]
     @State private var searchText = ""
@@ -20,8 +20,9 @@ struct SearchView: View {
                     LazyVStack{
                         ForEach(searchViewModel.fetchProducts()) { product in
                             NavigationLink{
-                                ProductView(name: product.productName,     productText: product.productDescription,
+                                ProductView(price: product.productPrice,name: product.productName,     productText: product.productDescription,
                                             image: product.productPicture)
+                                .environmentObject(authSettings)
                             } label: {
                                 ImageButton(image: product.productPicture, name: product.productName, price: product.productPrice)
                                     
@@ -49,9 +50,8 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SearchView().environmentObject(AuthSettings(user: nil, shoppingCart: nil))
         
-        SearchView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        
     }
 }

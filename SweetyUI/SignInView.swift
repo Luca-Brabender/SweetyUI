@@ -60,7 +60,7 @@ struct SignInView: View {
                             Button(action: {
                                 authSettings.authenticate(
                                     User(userName: username, email: email),
-                                    true
+                                    ShoppingCart(itemList: [])
                                 )
                                 dismiss()
                             }){
@@ -128,7 +128,7 @@ struct SignInView: View {
                             Task{
                                 authSettings.authenticate(
                                     User(userName: username, email: email),
-                                    true
+                                    ShoppingCart(itemList: [])
                                 )
                                 dismiss()
                             }
@@ -180,6 +180,6 @@ struct SignInView: View {
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView(isRegistered: false).environmentObject(AuthSettings(user: nil, authenticated: false))
+        SignInView(isRegistered: false).environmentObject(AuthSettings(user: nil, shoppingCart: nil))
     }
 }

@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ProductView: View {
-    @State private var orderNumber = 0
+    @EnvironmentObject var authSettings: AuthSettings
+    @State private var orderNumber = 2
+    let price: Double
     var name: String
     var productText: String;
     var image: String
@@ -63,12 +65,17 @@ struct ProductView: View {
                             
                             VStack{
                                 Picker("Number of \(name)", selection: $orderNumber) {
-                                        ForEach(2..<51) {
-                                            Text("\($0) \(name)s")
+                                    ForEach(2..<51, id: \.self) { picker in
+                                            Text("\(picker) \(name)s")
                                         }
                                     }
                                 
                                 Button{
+                                    if(authSettings.user != nil){
+                                        authSettings.addToCart(item: ProductItem(itemName: name, itemPieces: orderNumber, itemPrice: price)
+                                        )
+                                        authSettings.objectWillChange.send()
+                                    }
                                     
                                 } label: {
                                     
@@ -103,9 +110,7 @@ struct ProductView: View {
 
 struct ProductView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductView(name: "Donut", productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.", image: "donuts")
-        
-        ProductView(name: "Donut", productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.", image: "donuts")
-            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        ProductView(price: 1.30, name: "Donut", productText: "Delicous Donuts with creamy filling. For a busy workday. The texture of the inside of a donut should be moist, crumbly, and fluffy. As you bite into the donut, the donut will crumble and be delicate.", image: "donuts")
+            .environmentObject(AuthSettings(user: nil, shoppingCart: nil))
     }
 }
