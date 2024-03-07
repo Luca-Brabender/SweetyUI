@@ -27,9 +27,8 @@ extension AuthSettings{
         self.shoppingCart = nil
     }
     
-    public func addToCart(item: ProductItem){
-        self.shoppingCart!.addToCart(item: item)
-        self.objectWillChange.send()
+    public func addToCart(itemName: String, itemPieces: Int, itemPrice: Double){
+        self.shoppingCart!.addToCart(itemName: itemName, itemPieces: itemPieces, itemPrice: itemPrice)
     }
     
     public func removeFromCart(index: IndexSet){

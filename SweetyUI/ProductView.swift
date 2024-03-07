@@ -72,8 +72,8 @@ struct ProductView: View {
                                 
                                 Button{
                                     if(authSettings.user != nil){
-                                        authSettings.addToCart(item: ProductItem(itemName: name, itemPieces: orderNumber, itemPrice: price)
-                                        )
+                                        authSettings.addToCart(itemName: name, itemPieces: orderNumber, itemPrice: price)
+                                        
                                         authSettings.objectWillChange.send()
                                     }
                                     

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ShoppingCartButton: View {
-    let productItem: ProductItem
+    @ObservedObject var productItem: ProductItem
     
     var body: some View {
         GeometryReader{ geometry in
@@ -19,6 +19,7 @@ struct ShoppingCartButton: View {
                     Text("Price:")
                     Text("\(productItem.itemPrice * Double(productItem.itemPieces), specifier: "%.2f")$")
                 }
+    
             }
         }
     }

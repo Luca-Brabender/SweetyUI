@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ShoppingCartView: View {
     @EnvironmentObject var authSettings: AuthSettings
-    @State var list: [ProductItem]?
     @State var isLoggedIn: Bool = false
     @State var showSheet: Bool = false
     @State var resultPrice: Double = 0
@@ -24,19 +23,34 @@ struct ShoppingCartView: View {
                         ShoppingCartLogin
                     } else{
                         List{
-                            ForEach(authSettings.shoppingCart!.itemList) { productItem in
+                            
+                            ForEach(authSettings.shoppingCart!.itemList, id:\.self){
+                                productItem in
                                 VStack{
                                     ShoppingCartButton(productItem: productItem)
                                 }
                             }
                             .onDelete(perform:delete)
                             
+                            
                         }
-                        Text("There are \(authSettings.shoppingCart!.getSize()) item in your list")
+                        .task {
+                            authSettings.shoppingCart?.objectWillChange.send()
+                        }
+                        .onAppear{
+                            
+                            Task{
+                                //authSettings.shoppingCart?.objectWillChange.send()
+                                if((!(authSettings.shoppingCart?.itemList.isEmpty)!)){
+                                    for item in authSettings.shoppingCart!.itemList{
+                                        print(item.itemPieces)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                    .navigationTitle("Shopping Cart")
-                    .onAppear()
+                .navigationTitle("Shopping Cart")
             }
         }
         
@@ -44,19 +58,17 @@ struct ShoppingCartView: View {
     
     var ShoppingCartLogin: some View{
         GeometryReader{ geometry in
-            
             Text("No items")
                 .font(.headline)
                 .position(x: geometry.size.width*0.165, y:geometry.size.height*0.2)
             Text("Login to view your shopping cart")
                 .foregroundColor(.gray)
                 .position(x:geometry.size.width*0.39, y:geometry.size.height*0.23)
-            
             LoginButton
         }
     }
     
-
+    
     
     var LoginButton: some View {
         GeometryReader{ geometry in
@@ -99,7 +111,7 @@ struct ShoppingCartView_Previews: PreviewProvider {
                 userName: "Angela",
                 email: "angela@mail.com"
             ), shoppingCart: ShoppingCart(itemList: [ProductItem(itemName: "Donuts", itemPieces: 20, itemPrice: 20.30), ProductItem(itemName: "Brownies", itemPieces: 20, itemPrice: 20.30)]
-                                        )))
+                                         )))
         ShoppingCartView().environmentObject(AuthSettings(user: nil, shoppingCart: nil))
     }
 }

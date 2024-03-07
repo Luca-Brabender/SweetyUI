@@ -20,8 +20,16 @@ extension ShoppingCart{
     public func isEmpty() -> Bool{
         return itemList.isEmpty    }
     
-    public func addToCart(item: ProductItem){
-        itemList.append(item)
+    public func addToCart(itemName: String, itemPieces: Int, itemPrice: Double){
+        if(!itemList.isEmpty){
+            for item in itemList{
+                if(item.itemName == itemName){
+                    item.addPiecesToItem(itemPieces)
+                    return
+                }
+            }
+        }
+        itemList.append(ProductItem(itemName: itemName, itemPieces: itemPieces, itemPrice: itemPrice))
     }
     
     public func removeFromCart(index: IndexSet){

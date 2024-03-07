@@ -7,11 +7,11 @@
 
 import Foundation
 
-class ProductItem:Hashable ,Identifiable{
-    var productItemId = UUID()
-    var itemName: String
-    var itemPieces: Int
-    var itemPrice: Double
+class ProductItem:Hashable ,Identifiable, ObservableObject{
+    @Published var productItemId = UUID()
+    @Published var itemName: String
+    @Published var itemPieces: Int
+    @Published var itemPrice: Double
     
     init(itemName: String, itemPieces: Int, itemPrice: Double) {
         self.itemName = itemName
@@ -23,13 +23,17 @@ class ProductItem:Hashable ,Identifiable{
 
 extension ProductItem{
     static func == (lhs: ProductItem, rhs: ProductItem) -> Bool {
-        return lhs.productItemId == rhs.productItemId &&
-            lhs.itemName == rhs.itemName
+        return lhs.itemName == rhs.itemName
     }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(itemName)
         hasher.combine(productItemId)
+    }
+    
+    public func addPiecesToItem(_ number: Int){
+        self.itemPieces += number
+        self.objectWillChange.send()
     }
     
     public func getProductItemId() -> UUID{
