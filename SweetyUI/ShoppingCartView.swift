@@ -37,17 +37,22 @@ struct ShoppingCartView: View {
                         .task {
                             authSettings.shoppingCart?.objectWillChange.send()
                         }
-                        .onAppear{
+                        
+                        Button(action: {
                             
-                            Task{
-                                //authSettings.shoppingCart?.objectWillChange.send()
-                                if((!(authSettings.shoppingCart?.itemList.isEmpty)!)){
-                                    for item in authSettings.shoppingCart!.itemList{
-                                        print(item.itemPieces)
-                                    }
-                                }
-                            }
+                        }){
+                            HStack{
+                                Spacer()
+                                Text("Pay")
+                                Spacer()
+                            }.font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 300, height: 50)
+                                .background(Color.mint)
+                                .cornerRadius(10.0)
                         }
+                        
                     }
                 }
                 .navigationTitle("Shopping Cart")
@@ -109,7 +114,7 @@ struct ShoppingCartView_Previews: PreviewProvider {
         ShoppingCartView().environmentObject(AuthSettings(
             user: User(
                 userName: "Angela",
-                email: "angela@mail.com"
+                email: "angela@gmail.com"
             ), shoppingCart: ShoppingCart(itemList: [ProductItem(itemName: "Donuts", itemPieces: 20, itemPrice: 20.30), ProductItem(itemName: "Brownies", itemPieces: 20, itemPrice: 20.30)]
                                          )))
         ShoppingCartView().environmentObject(AuthSettings(user: nil, shoppingCart: nil))
